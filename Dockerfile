@@ -67,4 +67,11 @@ RUN powershell.exe ./build.ps1 -JustInstall
 # Copy source tree to image
 COPY . .
 
+# Fetch all submodules
+RUN git submodule update --init
+
+# Apply a build fix to hlsl2glsl
+RUN cd c:\src\shader-playground\shims\ShaderPlayground.Shims.Hlsl2Glsl\Source && `
+    git apply ..\add-algorithm-header.patch
+
 ENTRYPOINT ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
