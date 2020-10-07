@@ -35,6 +35,7 @@ docker exec "${container_name}" `
 
 function copyFromImage($relPath) {
     echo "Copying '${relPath}' from container..."
+    if (Test-Path ".\${relPath}") { rm -r ".\${relPath}" }
     docker cp ${container_name}:"${docker_project_path}\${relPath}" ".\${relPath}"
 }
 
@@ -45,4 +46,5 @@ docker stop ${container_name}
 echo "Copying build artifacts..."
 copyFromImage("build")
 copyFromImage("src\ShaderPlayground.Core\bin")
+copyFromImage("src\ShaderPlayground.Core\Binaries")
 copyFromImage("src\ShaderPlayground.Core.Tests\bin")
