@@ -28,10 +28,11 @@ float4 PSMain(PSInput input) : SV_TARGET
                         { "TargetProfile", "ps_5_0" },
                         { "DisableOptimizations", "false" },
                         { "OptimizationLevel", "2" },
+                        { "Version", "10.0.10240.16384" },
                     }))[0];
 
             Assert.Equal("DXBC", result.Outputs[0].Language);
-            Assert.Equal(713, result.Outputs[0].Value.Length);
+            Assert.Equal(28, result.Outputs[0].Value.Length);
         }
 
         [Fact]
@@ -46,18 +47,21 @@ float4 PSMain(PSInput input) : SV_TARGET
                         { "EntryPoint", "PSMain" },
                         { "TargetProfile", "ps_6_0" },
                         { "DisableOptimizations", "false" },
+                        { "ExtraOptions", "" },
+                        { "Enable16BitTypes", "false" },
                         { "OptimizationLevel", "2" },
                         { "OutputLanguage", LanguageNames.Dxil },
+                        { "Version", "trunk" },
                     }))[0];
 
             Assert.Equal("DXIL", result.PipeableOutput.Language);
             Assert.Equal(ShaderCodeType.Binary, result.PipeableOutput.CodeType);
-            Assert.Equal(1620, result.PipeableOutput.Binary.Length);
+            Assert.Equal(2868, result.PipeableOutput.Binary.Length);
             Assert.Equal("Disassembly", result.Outputs[0].DisplayName);
             Assert.Equal("DXIL", result.Outputs[0].Language);
-            Assert.Equal(3835, result.Outputs[0].Value.Length);
+            Assert.Equal(3608, result.Outputs[0].Value.Length);
             Assert.Equal("AST", result.Outputs[1].DisplayName);
-            Assert.Equal(1070, result.Outputs[1].Value.Length);
+            Assert.Equal(1100, result.Outputs[1].Value.Length);
         }
 
         [Fact]
@@ -72,8 +76,12 @@ float4 PSMain(PSInput input) : SV_TARGET
                         { "EntryPoint", "PSMain" },
                         { "TargetProfile", "ps_6_0" },
                         { "DisableOptimizations", "false" },
+                        { "ExtraOptions", "" },
                         { "OptimizationLevel", "2" },
                         { "OutputLanguage", LanguageNames.SpirV },
+                        { "SpirvTarget", "vulkan1.0" },
+                        { "Enable16BitTypes", "false" },
+                        { "Version", "trunk" },
                     }))[0];
 
             Assert.Equal("SPIR-V", result.PipeableOutput.Language);
@@ -94,11 +102,12 @@ float4 PSMain(PSInput input) : SV_TARGET
                     {
                         { "ShaderStage", "frag" },
                         { "Target", "Vulkan 1.0" },
-                        { "EntryPoint", "PSMain" }
+                        { "EntryPoint", "PSMain" },
+                        { "Version", "trunk" },
                     }))[0];
 
             Assert.Equal("SPIR-V", result.Outputs[0].Language);
-            Assert.Equal(1416, result.Outputs[0].Value.Length);
+            Assert.Equal(1235, result.Outputs[0].Value.Length);
         }
 
         [Fact]
@@ -114,7 +123,11 @@ float4 PSMain(PSInput input) : SV_TARGET
                         { "TargetProfile", "ps_6_0" },
                         { "OutputLanguage", LanguageNames.SpirV },
                         { "DisableOptimizations", "false" },
-                        { "OptimizationLevel", "2" }
+                        { "ExtraOptions", "" },
+                        { "OptimizationLevel", "2" },
+                        { "SpirvTarget", "vulkan1.0" },
+                        { "Enable16BitTypes", "false" },
+                        { "Version", "trunk" },
                     }),
                 new CompilationStep(
                     CompilerNames.Mali,
@@ -122,7 +135,8 @@ float4 PSMain(PSInput input) : SV_TARGET
                     {
                         { "ShaderStage", "frag" },
                         { "EntryPoint", "PSMain" },
-                        { "Core", "Mali-G72" }
+                        { "Core", "Mali-G72" },
+                        { "Version", "6.2.0" },
                     }))[1];
 
             Assert.Null(result.Outputs[0].Language);
